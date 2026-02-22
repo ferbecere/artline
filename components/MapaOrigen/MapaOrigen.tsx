@@ -61,6 +61,10 @@ interface MapaOrigenProps {
 function MapaOrigen({ pais, cultura, tipo }: MapaOrigenProps) {
   const colorObra = COLOR_TIPO[tipo];
   const isoNumerico = pais ? PAIS_A_ISO[pais] : null;
+  //log temporal
+   console.log('MapaOrigen props:', { pais, isoNumerico });
+
+
   const paisMostrado = pais || cultura || null;
 
   return (

@@ -100,13 +100,30 @@ async function cargarIdsDisponibles(): Promise<number[]> {
 
   console.log('[MetAPI] Recargando IDs de obras desde la API...');
 
-  // Lanzamos una búsqueda por cada departamento en paralelo
-  // Usamos Promise.allSettled para que un fallo no cancele el resto
+  // Usamos términos amplios por cada departamento — q=* no es compatible con todos los entornos
+  // Cada término devuelve miles de resultados para el departamento correspondiente
+  const BUSQUEDAS = [
+    { deptId: 6,  q: 'painting' },   // Asian Art
+    { deptId: 11, q: 'painting' },   // European Paintings
+    { deptId: 13, q: 'ancient' },    // Greek and Roman Art
+    { deptId: 15, q: 'islamic' },    // Islamic Art
+    { deptId: 21, q: 'modern' },     // Modern and Contemporary Art
+    { deptId: 10, q: 'egypt' },      // Egyptian Art
+    { deptId: 3,  q: 'ancient' },    // Ancient Near Eastern Art
+  ];
+
   const resultados = await Promise.allSettled(
-    DEPARTMENT_IDS.map(deptId =>
-      fetch(`${BASE_URL}/search?hasImages=true&isPublicDomain=true&q=*&departmentId=${deptId}`)
-        .then(r => r.json())
-        .then(d => (d.objectIDs as number[]) || [])
+    BUSQUEDAS.map(({ deptId, q }) =>
+      fetch(`${BASE_URL}/search?hasImages=true&isPublicDomain=true&q=${q}&departmentId=${deptId}`)
+        .then(r => {
+          if (!r.ok) throw new Error(`HTTP ${r.status}`);
+          return r.json();
+        })
+        .then(d => {
+          const ids = (d.objectIDs as number[]) || [];
+          console.log(`[MetAPI] Dept ${deptId} (${q}): ${ids.length} IDs`);
+          return ids;
+        })
     )
   );
 

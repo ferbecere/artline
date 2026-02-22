@@ -18,7 +18,7 @@
 import { createServer } from 'http';
 import { parse } from 'url';
 import next from 'next';
-import { Server } from 'socket.io';
+import { Server, type Server as IOServer } from 'socket.io';
 import { inicializarJuego, aplicarJugada, estadoParaCliente } from '../lib/logicaJuego';
 import { obtenerCartasAleatorias } from '../lib/metApi';
 
@@ -50,7 +50,7 @@ function generarIdSala() {
   return Array.from({ length: 6 }, () => chars[Math.floor(Math.random() * chars.length)]).join('');
 }
 
-function broadcastEstado(io, salaId) {
+function broadcastEstado(io: IOServer, salaId: string) {
   const sala = salas.get(salaId);
   if (!sala) return;
   

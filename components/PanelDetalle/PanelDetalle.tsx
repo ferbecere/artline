@@ -1,26 +1,27 @@
 'use client';
 
-// =============================================================================
-// COMPONENTE: PanelDetalle
-// =============================================================================
-// Panel lateral deslizante que aparece al hacer clic en una carta.
-// Muestra información completa de la obra.
-//
-// DISEÑO FUTURO: El espacio "minimapaZona" está reservado para mostrar
-// un mapa del mundo con el país de creación resaltado. Por ahora muestra
-// un placeholder. Se puede implementar con Leaflet o Mapbox.
-
-import styles from './PanelDetalle.module.css';
 import { Carta } from '@/types/juego';
 import Image from 'next/image';
+import dynamic from 'next/dynamic';
+import styles from './PanelDetalle.module.css';
+
+// Carga dinámica: react-simple-maps usa APIs del navegador, no funciona en SSR
+const MapaOrigen = dynamic(() => import('../MapaOrigen/MapaOrigen'), {
+  ssr: false,
+  loading: () => (
+    <div className={styles.mapaLoading}>
+      <span className={styles.mapaLoadingIcono}>🗺️</span>
+      <span className={styles.mapaLoadingTexto}>Cargando mapa...</span>
+    </div>
+  ),
+});
 
 interface PanelDetalleProps {
   carta: Carta | null;
   onCerrar: () => void;
-  ocultarFecha?: boolean; // true cuando la carta está en mano (evita trampa)
+  ocultarFecha?: boolean;
 }
 
-// Mapeamos tipo a texto legible y color
 const INFO_TIPO = {
   pintura:   { texto: 'Pintura',   color: 'var(--color-pintura)' },
   escultura: { texto: 'Escultura', color: 'var(--color-escultura)' },
@@ -34,30 +35,25 @@ export default function PanelDetalle({ carta, onCerrar, ocultarFecha = false }: 
 
   return (
     <>
-      {/* Overlay oscuro detrás del panel */}
       <div className={styles.overlay} onClick={onCerrar} />
-
-      {/* Panel principal */}
       <aside className={styles.panel}>
-        {/* ---- Cabecera ---- */}
+
+        {/* Cabecera */}
         <div className={styles.cabecera}>
           <div className={styles.badgeTipo} style={{ color: tipoInfo.color, borderColor: tipoInfo.color }}>
             {tipoInfo.texto}
           </div>
-          <button className={styles.btnCerrar} onClick={onCerrar} aria-label="Cerrar panel">
-            ✕
-          </button>
+          <button className={styles.btnCerrar} onClick={onCerrar} aria-label="Cerrar panel">✕</button>
         </div>
 
-        {/* ---- Imagen grande ---- */}
+        {/* Imagen */}
         <div className={styles.imagenContenedor}>
           {carta.imagen ? (
             <Image
               src={carta.imagen}
               alt={carta.titulo}
               fill
-              className={styles.imagen}
-              sizes="400px"
+              style={{ objectFit: 'contain' }}
               unoptimized
             />
           ) : (
@@ -65,12 +61,11 @@ export default function PanelDetalle({ carta, onCerrar, ocultarFecha = false }: 
           )}
         </div>
 
-        {/* ---- Info principal ---- */}
+        {/* Cuerpo */}
         <div className={styles.cuerpo}>
           <h2 className={styles.titulo}>{carta.titulo}</h2>
           <p className={styles.artista}>{carta.artista}</p>
 
-          {/* Fecha: solo visible cuando la carta está en el tablero */}
           {!ocultarFecha && (
             <div className={styles.anio}>
               <span className={styles.labelCampo}>Fecha</span>
@@ -78,10 +73,8 @@ export default function PanelDetalle({ carta, onCerrar, ocultarFecha = false }: 
             </div>
           )}
 
-          {/* Separador */}
           <hr className={styles.separador} />
 
-          {/* Ficha técnica */}
           <div className={styles.fichaTecnica}>
             {carta.medio && (
               <div className={styles.campo}>
@@ -115,7 +108,6 @@ export default function PanelDetalle({ carta, onCerrar, ocultarFecha = false }: 
             )}
           </div>
 
-          {/* Descripción breve */}
           {carta.descripcion && (
             <>
               <hr className={styles.separador} />
@@ -126,29 +118,16 @@ export default function PanelDetalle({ carta, onCerrar, ocultarFecha = false }: 
             </>
           )}
 
-          {/* ============================================================
-              ZONA RESERVADA PARA MINIMAPA (implementación futura)
-              ============================================================
-              Aquí irá un mapa interactivo de Leaflet/Mapbox mostrando
-              el país de creación de la obra resaltado en el mapa mundi.
-              La estructura HTML y el espacio ya están preparados.
-          */}
-          {/* Minimapa siempre visible — cuando no hay datos de país lo indicamos */}
+          {/* Minimapa — siempre visible */}
           <div className={styles.minimapaZona}>
-              <span className={styles.labelCampo}>Origen en el mundo</span>
-              <div className={styles.minimapaPlaceholder}>
-                <div className={styles.minimapaIcono}>🗺️</div>
-                <p className={styles.minimapaTexto}>
-                  {carta.pais || carta.cultura
-                    ? `Mapa de origen próximamente · ${carta.pais || carta.cultura}`
-                    : 'Origen geográfico no catalogado para esta obra'}
-                </p>
-              </div>
-              {/* TODO: <MapaOrigen pais={carta.pais} /> */}
+            <span className={styles.labelCampo}>Origen en el mundo</span>
+            <MapaOrigen
+              pais={carta.pais}
+              cultura={carta.cultura}
+              tipo={carta.tipo}
+            />
           </div>
 
-          {/* Enlace al museo: solo cuando la carta ya está en el tablero.
-              Si está en mano, el enlace permitiría ver la fecha en la web del museo. */}
           {!ocultarFecha && (
             <a
               href={carta.urlObra}

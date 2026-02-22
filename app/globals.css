@@ -1,0 +1,146 @@
+/* =============================================================================
+   ARTLINE — ESTILOS GLOBALES
+   =============================================================================
+   Variables CSS personalizadas para toda la aplicación.
+   Inspirado en la paleta de Metacritic: fondos oscuros, acentos de color puros.
+
+   PALETA:
+   - Verde  → Pinturas   (#66cc00 — el verde icónico de Metacritic)
+   - Amarillo → Esculturas (#ffcc00)
+   - Rojo   → Otros      (#ff3400)
+   - Grises → Interface  (escala de grises Metacritic-style)
+
+   FUENTES:
+   - Bodoni MT / Bodoni 72 → Títulos (elegante, editorial)
+   - Verdana               → Cuerpo  (legible, neutro)
+*/
+
+@import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap');
+
+:root {
+  /* ---- Colores de tipo de obra ---- */
+  --color-pintura:   #66cc00;
+  --color-escultura: #ffcc00;
+  --color-otro:      #9b8ec4;  /* lavanda — menos agresivo que el rojo original */
+
+  /* ---- Escala de grises (Metacritic-style) ---- */
+  --gris-900: #0d0d0d;  /* fondo más oscuro */
+  --gris-800: #1a1a1a;  /* fondo principal */
+  --gris-700: #2a2a2a;  /* superficies */
+  --gris-600: #3a3a3a;  /* bordes */
+  --gris-500: #555555;  /* texto deshabilitado */
+  --gris-400: #888888;  /* texto secundario */
+  --gris-200: #cccccc;  /* texto principal */
+  --gris-100: #f0f0f0;  /* texto destacado */
+  --blanco:   #ffffff;
+
+  /* ---- Tipografía ---- */
+  /* Bodoni no está en Google Fonts gratis, usamos Libre Baskerville como
+     alternativa elegante y disponible. La familia Bodoni se activa si el
+     usuario la tiene instalada (Mac/Windows suelen tenerla). */
+  --fuente-titulo: 'Bodoni MT', 'Bodoni 72', 'Libre Baskerville', Georgia, serif;
+  --fuente-cuerpo: Verdana, Geneva, Tahoma, sans-serif;
+
+  /* ---- Tamaños ---- */
+  --radio-carta: 8px;
+  --radio-ui: 4px;
+  --sombra-carta: 0 4px 20px rgba(0, 0, 0, 0.6);
+  --sombra-hover: 0 8px 32px rgba(0, 0, 0, 0.8);
+  --transicion: 0.2s ease;
+}
+
+/* ---- Reset y base ---- */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  height: 100%;
+  overflow: hidden; /* El tablero de juego gestiona su propio scroll */
+}
+
+body {
+  background-color: var(--gris-800);
+  color: var(--gris-200);
+  font-family: var(--fuente-cuerpo);
+  font-size: 14px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Titulares con Bodoni */
+h1, h2, h3, h4 {
+  font-family: var(--fuente-titulo);
+  color: var(--gris-100);
+}
+
+a {
+  color: var(--gris-200);
+  text-decoration: none;
+}
+
+button {
+  cursor: pointer;
+  font-family: var(--fuente-cuerpo);
+}
+
+/* Scrollbar personalizada (webkit) */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--gris-800);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--gris-600);
+  border-radius: 3px;
+}
+
+/* ---- Animaciones globales ---- */
+
+@keyframes aparecer {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pulsar {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.5; }
+}
+
+@keyframes entrarCarta {
+  from {
+    opacity: 0;
+    transform: translateY(-20px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes sacudirCarta {
+  0%, 100% { transform: translateX(0); }
+  20%       { transform: translateX(-8px); }
+  40%       { transform: translateX(8px); }
+  60%       { transform: translateX(-5px); }
+  80%       { transform: translateX(5px); }
+}
+
+@keyframes brilloExito {
+  0%   { box-shadow: 0 0 0 0 rgba(102, 204, 0, 0.7); }
+  70%  { box-shadow: 0 0 0 15px rgba(102, 204, 0, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(102, 204, 0, 0); }
+}
+
+.animate-aparecer { animation: aparecer 0.3s ease forwards; }
+.animate-pulsar   { animation: pulsar 1.5s ease infinite; }

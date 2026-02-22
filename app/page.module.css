@@ -1,0 +1,293 @@
+/* ---- Página de Inicio ---- */
+
+.main {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+  background: var(--gris-800);
+}
+
+/* Fondo decorativo: líneas horizontales sutiles evocando una línea del tiempo */
+.fondo {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.fondoLinea1, .fondoLinea2 {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: var(--gris-700);
+}
+
+.fondoLinea1 { top: 35%; }
+.fondoLinea2 { top: 65%; }
+
+/* ---- Contenedor central ---- */
+.contenedor {
+  position: relative;
+  width: 100%;
+  max-width: 420px;
+  padding: 0 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  animation: aparecer 0.4s ease forwards;
+}
+
+/* ---- Header / Logo ---- */
+.header {
+  text-align: center;
+}
+
+.logo {
+  font-family: var(--fuente-titulo);
+  font-size: 64px;
+  font-style: italic;
+  font-weight: 700;
+  color: var(--gris-100);
+  letter-spacing: -2px;
+  line-height: 1;
+  margin-bottom: 8px;
+}
+
+.tagline {
+  font-size: 11px;
+  color: var(--gris-500);
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  line-height: 1.5;
+}
+
+.estadoConexion {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 10px;
+  color: var(--gris-500);
+  margin-top: 12px;
+}
+
+.puntoCon {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.conectado { background: var(--color-pintura); }
+.desconectado {
+  background: var(--gris-600);
+  animation: pulsar 1.5s ease infinite;
+}
+
+/* ---- Panel ---- */
+.panel {
+  background: var(--gris-900);
+  border: 1px solid var(--gris-700);
+  border-radius: var(--radio-carta);
+  padding: 28px;
+}
+
+/* ---- Vista inicio ---- */
+.opciones {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.descripcion {
+  text-align: center;
+}
+
+.descripcion p {
+  font-size: 13px;
+  color: var(--gris-400);
+  line-height: 1.7;
+}
+
+.botonesAccion {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* ---- Botones ---- */
+.btn {
+  width: 100%;
+  padding: 13px 20px;
+  border-radius: var(--radio-ui);
+  font-size: 13px;
+  font-weight: 700;
+  font-family: var(--fuente-cuerpo);
+  border: 1px solid transparent;
+  transition: all var(--transicion);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  letter-spacing: 0.5px;
+}
+
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.btnPrimario {
+  background: var(--gris-100);
+  color: var(--gris-900);
+  border-color: var(--gris-100);
+}
+
+.btnPrimario:hover:not(:disabled) {
+  background: var(--blanco);
+  border-color: var(--blanco);
+}
+
+.btnSecundario {
+  background: transparent;
+  color: var(--gris-200);
+  border-color: var(--gris-600);
+}
+
+.btnSecundario:hover:not(:disabled) {
+  border-color: var(--gris-400);
+  color: var(--gris-100);
+}
+
+.btnIcono {
+  font-size: 10px;
+}
+
+/* ---- Leyenda de colores ---- */
+.leyenda {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  padding-top: 4px;
+}
+
+.leyendaItem {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 10px;
+  color: var(--gris-500);
+}
+
+.leyendaColor {
+  width: 12px;
+  height: 12px;
+  border-radius: 2px;
+  flex-shrink: 0;
+}
+
+.leyendaPintura   { background: var(--color-pintura); }
+.leyendaEscultura { background: var(--color-escultura); }
+.leyendaOtro      { background: var(--color-otro); }
+
+/* ---- Formularios ---- */
+.formulario {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.btnVolver {
+  background: none;
+  border: none;
+  color: var(--gris-500);
+  font-size: 11px;
+  font-family: var(--fuente-cuerpo);
+  padding: 0;
+  text-align: left;
+  cursor: pointer;
+  transition: color var(--transicion);
+  align-self: flex-start;
+}
+
+.btnVolver:hover { color: var(--gris-200); }
+
+.formTitulo {
+  font-family: var(--fuente-titulo);
+  font-size: 22px;
+  color: var(--gris-100);
+}
+
+.formDescripcion {
+  font-size: 12px;
+  color: var(--gris-400);
+  line-height: 1.5;
+}
+
+.campo {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.label {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: var(--gris-500);
+  font-weight: 700;
+}
+
+.input {
+  background: var(--gris-800);
+  border: 1px solid var(--gris-600);
+  border-radius: var(--radio-ui);
+  color: var(--gris-100);
+  font-family: var(--fuente-cuerpo);
+  font-size: 14px;
+  padding: 10px 12px;
+  width: 100%;
+  transition: border-color var(--transicion);
+}
+
+.input:focus {
+  outline: none;
+  border-color: var(--gris-400);
+}
+
+.input::placeholder {
+  color: var(--gris-600);
+}
+
+.inputCodigo {
+  font-size: 20px;
+  letter-spacing: 6px;
+  text-align: center;
+  font-weight: 700;
+}
+
+.error {
+  font-size: 12px;
+  color: var(--color-otro);
+  background: rgba(255, 52, 0, 0.1);
+  border: 1px solid rgba(255, 52, 0, 0.3);
+  border-radius: var(--radio-ui);
+  padding: 8px 12px;
+}
+
+/* ---- Footer ---- */
+.footer {
+  text-align: center;
+  font-size: 10px;
+  color: var(--gris-600);
+}
+
+.footer a {
+  color: var(--gris-500);
+}
+
+.footer a:hover {
+  color: var(--gris-400);
+}

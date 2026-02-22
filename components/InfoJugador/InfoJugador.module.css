@@ -1,0 +1,122 @@
+/* ---- Barra del rival (parte superior) ---- */
+
+.barra {
+  width: 100%;
+  background: var(--gris-900);
+  border-bottom: 1px solid var(--gris-600);
+  padding: 8px 16px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  transition: border-bottom-color var(--transicion);
+  flex-shrink: 0;
+  min-height: 52px;
+}
+
+.esTurno {
+  border-bottom-color: var(--gris-400);
+}
+
+/* ---- Info jugador ---- */
+.jugadorInfo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--gris-700);
+  border: 1px solid var(--gris-600);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--fuente-titulo);
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--gris-400);
+  flex-shrink: 0;
+  transition: all var(--transicion);
+}
+
+.avatarActivo {
+  border-color: var(--gris-200);
+  color: var(--gris-100);
+}
+
+.datos {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.nombre {
+  font-family: var(--fuente-titulo);
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--gris-100);
+}
+
+.desconectado {
+  font-size: 10px;
+  color: var(--color-otro);
+}
+
+/* ---- Contador cartas ---- */
+.contador {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.numCartas {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--gris-100);
+  min-width: 24px;
+}
+
+/* Abanico de cartas pequeño */
+.abanico {
+  position: relative;
+  display: inline-block;
+  width: 24px;
+  height: 18px;
+  flex-shrink: 0;
+}
+
+.c1, .c2, .c3 {
+  position: absolute;
+  width: 12px;
+  height: 16px;
+  border-radius: 2px;
+  border: 1px solid var(--gris-500);
+  background: var(--gris-700);
+}
+
+.c1 { top: 2px; left: 0; transform: rotate(-12deg); }
+.c2 { top: 0; left: 6px; transform: rotate(0deg); z-index: 1; }
+.c3 { top: 2px; left: 12px; transform: rotate(12deg); }
+
+/* ---- Indicador de turno ---- */
+.indicadorTurno {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--gris-400);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-left: auto;
+}
+
+.puntoPulsa {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--gris-200);
+  animation: pulsar 1.2s ease infinite;
+}

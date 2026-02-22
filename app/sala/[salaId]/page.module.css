@@ -1,0 +1,422 @@
+/* ---- Tapete de juego ---- */
+
+/* Layout en 3 filas: rival | tablero | mano */
+.tapete {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+  background: var(--gris-800);
+  position: relative;
+}
+
+/* ---- Zona central (tablero) ---- */
+.zonaCentral {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  position: relative;
+  padding: 8px 0;
+}
+
+/* Mensaje de la última jugada */
+.mensajeJugada {
+  position: absolute;
+  top: 8px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 11px;
+  color: var(--gris-400);
+  background: var(--gris-900);
+  border: 1px solid var(--gris-700);
+  border-radius: var(--radio-ui);
+  padding: 5px 12px;
+  white-space: nowrap;
+  z-index: 5;
+  animation: aparecer 0.3s ease forwards;
+  pointer-events: none;
+}
+
+/* Placeholder sin rival */
+.sinRival {
+  padding: 14px 16px;
+  font-size: 12px;
+  color: var(--gris-500);
+  border-bottom: 1px solid var(--gris-700);
+  min-height: 52px;
+  flex-shrink: 0;
+  animation: pulsar 1.5s ease infinite;
+}
+
+/* ---- Error flotante ---- */
+.errorFlotante {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(255, 52, 0, 0.1);
+  border: 1px solid var(--color-otro);
+  color: var(--gris-100);
+  font-size: 12px;
+  padding: 10px 16px;
+  border-radius: var(--radio-ui);
+  cursor: pointer;
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  animation: aparecer 0.2s ease forwards;
+  white-space: nowrap;
+}
+
+.errorCerrar {
+  color: var(--gris-500);
+  font-size: 16px;
+  line-height: 1;
+}
+
+/* ============================================================
+   PANTALLA DE ESPERA
+   ============================================================ */
+
+.pantallaEspera {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--gris-800);
+}
+
+.esperaContenedor {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+  animation: aparecer 0.4s ease forwards;
+}
+
+.esperaLogo {
+  font-family: var(--fuente-titulo);
+  font-size: 48px;
+  font-style: italic;
+  color: var(--gris-100);
+}
+
+.esperaBox {
+  background: var(--gris-900);
+  border: 1px solid var(--gris-700);
+  border-radius: var(--radio-carta);
+  padding: 32px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  min-width: 320px;
+}
+
+.esperaBox h2 {
+  font-family: var(--fuente-titulo);
+  font-size: 20px;
+  color: var(--gris-100);
+}
+
+.esperaBox p {
+  font-size: 12px;
+  color: var(--gris-400);
+}
+
+.codigoSala {
+  font-family: var(--fuente-cuerpo);
+  font-size: 32px;
+  font-weight: 700;
+  letter-spacing: 8px;
+  color: var(--gris-100);
+  background: var(--gris-800);
+  border: 1px solid var(--gris-600);
+  border-radius: var(--radio-ui);
+  padding: 12px 24px;
+}
+
+.esperaTexto {
+  font-size: 11px !important;
+  color: var(--gris-600) !important;
+  animation: pulsar 1.5s ease infinite;
+}
+
+.spinner {
+  width: 28px;
+  height: 28px;
+  border: 2px solid var(--gris-700);
+  border-top-color: var(--gris-400);
+  border-radius: 50%;
+  animation: girar 0.8s linear infinite;
+}
+
+@keyframes girar {
+  to { transform: rotate(360deg); }
+}
+
+.btnVolver {
+  background: none;
+  border: none;
+  color: var(--gris-500);
+  font-size: 12px;
+  font-family: var(--fuente-cuerpo);
+  cursor: pointer;
+  transition: color var(--transicion);
+}
+
+.btnVolver:hover { color: var(--gris-200); }
+
+/* ============================================================
+   PANTALLA FIN DE JUEGO
+   ============================================================ */
+
+.pantallaFin {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--gris-800);
+}
+
+.finContenedor {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  max-width: 500px;
+  padding: 20px;
+  animation: aparecer 0.5s ease forwards;
+}
+
+.finEmoji {
+  font-size: 4rem;
+  line-height: 1;
+}
+
+.finTitulo {
+  font-family: var(--fuente-titulo);
+  font-size: 36px;
+  font-style: italic;
+  color: var(--gris-100);
+}
+
+.finSubtitulo {
+  font-size: 13px;
+  color: var(--gris-400);
+  text-align: center;
+}
+
+.finTablero {
+  background: var(--gris-900);
+  border: 1px solid var(--gris-700);
+  border-radius: var(--radio-ui);
+  padding: 16px;
+  width: 100%;
+}
+
+.finTableroLabel {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: var(--gris-500);
+  margin-bottom: 10px;
+}
+
+.finTableroCartas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.finCartaMini {
+  background: var(--gris-700);
+  border-radius: 2px;
+  padding: 3px 6px;
+}
+
+.finAnio {
+  font-size: 10px;
+  color: var(--gris-300);
+}
+
+.btnNuevaPartida {
+  background: var(--gris-100);
+  color: var(--gris-900);
+  border: none;
+  border-radius: var(--radio-ui);
+  padding: 12px 28px;
+  font-size: 13px;
+  font-weight: 700;
+  font-family: var(--fuente-cuerpo);
+  cursor: pointer;
+  transition: background var(--transicion);
+  margin-top: 8px;
+}
+
+.btnNuevaPartida:hover {
+  background: var(--blanco);
+}
+
+/* ---- Modal rendirse ---- */
+.modalOverlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.65);
+  z-index: 300;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: aparecer 0.15s ease forwards;
+}
+
+.modal {
+  background: var(--gris-900);
+  border: 1px solid var(--gris-600);
+  border-radius: var(--radio-carta);
+  padding: 28px 32px;
+  max-width: 360px;
+  width: 90vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  text-align: center;
+  animation: entrarCarta 0.2s ease forwards;
+}
+
+.modalIcono {
+  font-size: 2.5rem;
+  line-height: 1;
+}
+
+.modalTitulo {
+  font-family: var(--fuente-titulo);
+  font-size: 20px;
+  color: var(--gris-100);
+}
+
+.modalTexto {
+  font-size: 13px;
+  color: var(--gris-400);
+  line-height: 1.6;
+}
+
+.modalTexto strong {
+  color: var(--gris-200);
+}
+
+.modalBotones {
+  display: flex;
+  gap: 10px;
+  margin-top: 8px;
+  width: 100%;
+}
+
+.modalBtnSi {
+  flex: 1;
+  padding: 10px;
+  background: var(--color-otro);
+  border: none;
+  border-radius: var(--radio-ui);
+  color: var(--blanco);
+  font-size: 13px;
+  font-weight: 700;
+  font-family: var(--fuente-cuerpo);
+  cursor: pointer;
+  transition: opacity var(--transicion);
+}
+
+.modalBtnSi:hover { opacity: 0.85; }
+
+.modalBtnNo {
+  flex: 1;
+  padding: 10px;
+  background: transparent;
+  border: 1px solid var(--gris-600);
+  border-radius: var(--radio-ui);
+  color: var(--gris-400);
+  font-size: 13px;
+  font-family: var(--fuente-cuerpo);
+  cursor: pointer;
+  transition: all var(--transicion);
+}
+
+.modalBtnNo:hover {
+  border-color: var(--gris-400);
+  color: var(--gris-200);
+}
+
+/* ---- Fila código + botón copiar ---- */
+.filaCodigo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.btnCopiar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  background: var(--gris-800);
+  border: 1px solid var(--gris-600);
+  border-radius: var(--radio-ui);
+  color: var(--gris-400);
+  cursor: pointer;
+  transition: all var(--transicion);
+  flex-shrink: 0;
+}
+
+.btnCopiar:hover {
+  border-color: var(--gris-400);
+  color: var(--gris-200);
+}
+
+/* Estado: recién copiado — breve flash verde */
+.copiado {
+  border-color: var(--color-pintura);
+  color: var(--color-pintura);
+  background: rgba(102, 204, 0, 0.08);
+}
+
+/* ---- Caja de aviso: clic derecho ---- */
+.avisoInfo {
+  position: absolute;
+  top: 12px;
+  right: 16px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--gris-900);
+  border: 1px solid var(--gris-700);
+  border-radius: var(--radio-ui);
+  padding: 7px 10px 7px 12px;
+  font-size: 11px;
+  color: var(--gris-400);
+  z-index: 10;
+  animation: aparecer 0.4s ease 1s both; /* aparece 1s después de cargar */
+  pointer-events: all;
+}
+
+.avisoClose {
+  background: none;
+  border: none;
+  color: var(--gris-600);
+  font-size: 16px;
+  line-height: 1;
+  cursor: pointer;
+  padding: 0 2px;
+  transition: color var(--transicion);
+}
+
+.avisoClose:hover {
+  color: var(--gris-300);
+}

@@ -1,0 +1,233 @@
+/* =============================================================================
+   CARTA — CSS Module
+   ============================================================================= */
+
+/* ---- BASE ---- */
+.carta {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  border-radius: var(--radio-carta);
+  overflow: hidden;
+  background: var(--gris-700);
+  box-shadow: var(--sombra-carta);
+  transition: transform var(--transicion), box-shadow var(--transicion);
+  flex-shrink: 0;
+  user-select: none;
+}
+
+/* ---- TAMAÑOS ---- */
+/* El ancho/alto ratio es ~5:7 (como una carta de póker, pero más ancho) */
+
+.normal {
+  width: 140px;
+  height: 210px;
+}
+
+.pequeña {
+  width: 108px;
+  height: 160px;
+}
+
+.mini {
+  width: 76px;
+  height: 112px;
+}
+
+/* ---- ESTADOS INTERACTIVOS ---- */
+
+.enMano {
+  cursor: pointer;
+}
+
+.enMano:hover {
+  transform: translateY(-12px) scale(1.05);
+  box-shadow: var(--sombra-hover);
+  z-index: 10;
+}
+
+.enMano:hover .titulo,
+.enMano:hover .artista {
+  opacity: 1;
+}
+
+.enTablero {
+  cursor: default;
+}
+
+.seleccionada {
+  transform: translateY(-16px);
+  box-shadow: 0 0 0 2px var(--blanco), var(--sombra-hover);
+  z-index: 20;
+}
+
+/* ---- BORDES DE COLOR (tipo de obra) ---- */
+.colorPintura  { border-top: 3px solid var(--color-pintura); }
+.colorEscultura { border-top: 3px solid var(--color-escultura); }
+.colorOtro     { border-top: 3px solid var(--color-otro); }
+
+/* ---- IMAGEN (70% del área) ---- */
+.imagenContenedor {
+  position: relative;
+  flex: 0 0 70%;
+  background: var(--gris-900);
+  overflow: hidden;
+}
+
+.imagen {
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+
+.enMano:hover .imagen {
+  transform: scale(1.05);
+}
+
+.sinImagen {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  color: var(--gris-600);
+}
+
+/* ---- BADGE DE TIPO (sobre la imagen) ---- */
+.badgeTipo {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  background: var(--gris-900);
+  border: 1px solid;
+  opacity: 0.9;
+}
+
+.colorPintura  .badgeTipo { border-color: var(--color-pintura); }
+.colorEscultura .badgeTipo { border-color: var(--color-escultura); }
+.colorOtro     .badgeTipo { border-color: var(--color-otro); }
+
+/* ---- INFO (30% inferior) ---- */
+.info {
+  flex: 1;
+  padding: 8px 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  overflow: hidden;
+  background: var(--gris-700);
+}
+
+.titulo {
+  font-family: var(--fuente-titulo);
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--gris-100);
+  line-height: 1.3;
+  /* Truncar con elipsis si es muy largo */
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.artista {
+  font-size: 10px;
+  color: var(--gris-400);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.anio {
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--gris-200);
+  margin-top: auto;
+}
+
+/* Ajuste de tipografía para tamaños menores */
+.pequeña .titulo { font-size: 10px; }
+.pequeña .artista { font-size: 9px; }
+.mini .titulo    { font-size: 9px; -webkit-line-clamp: 1; }
+.mini .artista   { display: none; }
+.mini .anio      { font-size: 9px; }
+
+/* ---- INDICADOR DE SELECCIÓN ---- */
+.indicadorSeleccion {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--blanco);
+  font-size: 8px;
+  font-weight: 700;
+  text-align: center;
+  padding: 3px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* ---- BOCA ABAJO (rival) ---- */
+.bocaAbajo {
+  cursor: default;
+}
+
+.dorso {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, var(--gris-700) 0%, var(--gris-600) 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--gris-600);
+}
+
+.dorsoBrand {
+  font-family: var(--fuente-titulo);
+  font-size: 2.5rem;
+  font-style: italic;
+  color: var(--gris-500);
+}
+
+.mini .dorsoBrand { font-size: 1.5rem; }
+
+/* ---- ESTADOS DE ANIMACIÓN ---- */
+.animarError {
+  animation: sacudirCarta 0.4s ease forwards;
+}
+
+.animarExito {
+  animation: brilloExito 0.6s ease forwards;
+}
+
+/* ---- CARGANDO (skeleton) ---- */
+.cargando {
+  background: var(--gris-700);
+  animation: pulsar 1.5s ease infinite;
+}
+
+.skeletonImg {
+  flex: 0 0 70%;
+  background: var(--gris-600);
+}
+
+.skeletonTexto {
+  flex: 1;
+  background: var(--gris-600);
+  margin: 8px;
+  border-radius: 2px;
+}
+
+/* ---- ANIMACIÓN DE ENTRADA ---- */
+.carta {
+  animation: entrarCarta 0.3s ease forwards;
+}

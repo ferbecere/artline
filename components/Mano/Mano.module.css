@@ -1,0 +1,229 @@
+/* ---- Mano del jugador ---- */
+
+.contenedor {
+  width: 100%;
+  background: var(--gris-900);
+  border-top: 1px solid var(--gris-600);
+  padding: 10px 16px 12px;
+  flex-shrink: 0;
+  transition: padding 0.35s ease, border-top-color 0.35s ease;
+}
+
+/* Cuando es mi turno: la franja crece y el borde se ilumina */
+.esTurno {
+  padding: 14px 16px 16px;
+  border-top-color: var(--gris-400);
+  animation: pulsarBorde 2.5s ease infinite;
+}
+
+@keyframes pulsarBorde {
+  0%, 100% { border-top-color: var(--gris-400); }
+  50%       { border-top-color: var(--gris-200); }
+}
+
+/* ---- Barra de jugador ---- */
+.barraJugador {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+
+.infoJugador {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+.nombreJugador {
+  font-family: var(--fuente-titulo);
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--gris-100);
+}
+
+.contadorCartas {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.numCartas {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--gris-200);
+}
+
+/* ---- Icono abanico de cartas ---- */
+.iconoAbanico {
+  position: relative;
+  display: inline-block;
+  width: 20px;
+  height: 16px;
+}
+
+.carta1, .carta2, .carta3 {
+  position: absolute;
+  width: 10px;
+  height: 14px;
+  border-radius: 2px;
+  border: 1px solid var(--gris-400);
+  background: var(--gris-600);
+}
+
+.carta1 { top: 2px; left: 0;  transform: rotate(-12deg); }
+.carta2 { top: 0;  left: 5px; transform: rotate(0deg);   z-index: 1; }
+.carta3 { top: 2px; left: 10px; transform: rotate(12deg); }
+
+/* ---- Mensaje / Indicador de turno ---- */
+.mensajeZona {
+  flex: 1;
+}
+
+.indicadorTurno {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  color: var(--gris-200);
+}
+
+.puntoPulsa {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--color-pintura);
+  animation: pulsar 1.2s ease infinite;
+  flex-shrink: 0;
+}
+
+.indicadorColocar {
+  font-size: 12px;
+  color: var(--gris-100);
+  font-weight: 700;
+}
+
+.esperando {
+  font-size: 12px;
+  color: var(--gris-500);
+  font-style: italic;
+}
+
+.mensajeResultado {
+  font-size: 11px;
+  font-weight: 700;
+  padding: 4px 8px;
+  border-radius: var(--radio-ui);
+  animation: aparecer 0.2s ease forwards;
+}
+
+.correcto {
+  background: rgba(102, 204, 0, 0.15);
+  color: var(--color-pintura);
+  border: 1px solid rgba(102, 204, 0, 0.3);
+}
+
+.incorrecto {
+  background: rgba(255, 52, 0, 0.15);
+  color: var(--color-otro);
+  border: 1px solid rgba(255, 52, 0, 0.3);
+}
+
+/* ---- Botones barra ---- */
+.accionesBarra {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+  margin-left: auto;
+}
+
+.btnCancelar {
+  background: transparent;
+  border: 1px solid var(--gris-600);
+  color: var(--gris-400);
+  font-size: 11px;
+  padding: 4px 10px;
+  border-radius: var(--radio-ui);
+  transition: all var(--transicion);
+}
+
+.btnCancelar:hover {
+  border-color: var(--gris-400);
+  color: var(--gris-200);
+}
+
+.btnRendirse {
+  background: transparent;
+  border: 1px solid var(--gris-700);
+  color: var(--gris-600);
+  font-size: 11px;
+  font-family: var(--fuente-cuerpo);
+  padding: 4px 10px;
+  border-radius: var(--radio-ui);
+  cursor: pointer;
+  transition: all var(--transicion);
+}
+
+.btnRendirse:hover {
+  border-color: var(--color-otro);
+  color: var(--color-otro);
+  background: rgba(255, 52, 0, 0.06);
+}
+
+/* ---- Área de cartas ---- */
+.mano {
+  display: flex;
+  gap: 10px;
+  align-items: flex-end;
+  justify-content: center;   /* centradas por defecto */
+  min-height: 182px;
+  overflow-x: auto;
+  padding-bottom: 4px;
+  transition: min-height 0.35s ease;
+}
+
+/* Cuando es mi turno: cartas ligeramente más grandes */
+.esTurno .mano {
+  min-height: 196px; /* sube para dar espacio al scale */
+}
+
+/* ---- Wrapper individual de carta ---- */
+.cartaWrapper {
+  position: relative;
+  flex-shrink: 0;
+  transition: transform 0.35s ease, opacity 0.35s ease;
+  transform-origin: bottom center;
+}
+
+/* Es mi turno: cartas 8% más grandes */
+.esTurno .cartaWrapper {
+  transform: scale(1.08);
+}
+
+/* No es mi turno: overlay gris semitransparente sobre cada carta */
+.noEsTurno .cartaWrapper::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(13, 13, 13, 0.35);
+  border-radius: var(--radio-carta);
+  pointer-events: none;
+  z-index: 5;
+}
+
+/* ---- Sin cartas ---- */
+.sinCartas {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  min-height: 100px;
+  color: var(--gris-400);
+}
+
+.sinCartas span { font-size: 2rem; }
+.sinCartas p    { font-size: 14px; font-weight: 700; }

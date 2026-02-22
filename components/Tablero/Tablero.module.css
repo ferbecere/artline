@@ -1,0 +1,105 @@
+/* ---- Tablero ---- */
+
+.contenedor {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  padding: 0 16px;
+}
+
+.etiquetaTiempo {
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  color: var(--gris-500);
+  text-transform: uppercase;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.linea {
+  flex: 1;
+  position: relative;
+  overflow-x: auto;
+  padding: 16px 0;
+}
+
+/* Línea horizontal de fondo */
+.linea::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: var(--gris-600);
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+
+.tablero {
+  display: flex;
+  align-items: center;
+  justify-content: center;  /* centra cuando las cartas no llenan el ancho */
+  gap: 6px;
+  min-height: 200px;
+  width: max-content;
+  min-width: 100%;
+  padding: 0 8px;
+}
+
+.cartaConZona {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.vacio {
+  color: var(--gris-500);
+  font-size: 12px;
+  font-style: italic;
+  margin: auto;
+}
+
+/* ---- Zonas de inserción ---- */
+
+.zonaInsercion {
+  flex-shrink: 0;
+  width: 32px;
+  height: 140px;
+  background: transparent;
+  border: 2px dashed transparent;
+  border-radius: var(--radio-ui);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all var(--transicion);
+  color: transparent;
+}
+
+/* En modo colocación, las zonas se hacen visibles */
+.modoColocacion .zonaInsercion {
+  border-color: var(--gris-500);
+  background: rgba(255, 255, 255, 0.03);
+  color: var(--gris-500);
+}
+
+.modoColocacion .zonaInsercion:hover {
+  border-color: var(--blanco);
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--blanco);
+  transform: scaleX(1.2);
+  width: 40px;
+}
+
+.flechaInsercion {
+  font-size: 14px;
+  font-weight: 700;
+  transition: transform var(--transicion);
+}
+
+.modoColocacion .zonaInsercion:hover .flechaInsercion {
+  transform: scale(1.3);
+}

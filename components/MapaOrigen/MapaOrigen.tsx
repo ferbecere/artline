@@ -77,6 +77,11 @@ function MapaOrigen({ pais, cultura, tipo }: MapaOrigenProps) {
           <Geographies geography={GEO_URL}>
             {({ geographies }) =>
               geographies.map((geo) => {
+              const id = Number(geo.id);
+                // Log temporal — quitar después
+                if (id === 156 || id === 364 || id === 818) {
+                  console.log('País encontrado:', geo.id, geo.properties);
+                 }
                 const esOrigen = isoNumerico !== null && Number(geo.id) === isoNumerico;
                 return (
                   <Geography

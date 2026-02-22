@@ -175,7 +175,7 @@ app.prepare().then(() => {
     });
   });
 
-  httpServer.listen(port, () => {
+  httpServer.listen(port, hostname, () => {
     console.log(`\n🎨 ArtLine corriendo en http://${hostname}:${port}`);
     console.log(`   Modo: ${dev ? 'desarrollo' : 'producción'}\n`);
   });

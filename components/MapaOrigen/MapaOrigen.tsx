@@ -13,32 +13,34 @@ const COLOR_TIPO: Record<TipoObra, string> = {
   otro:      '#9b8ec4',
 };
 
-const PAIS_A_ISO: Record<string, string> = {
-  'France': '250', 'Italy': '380', 'Spain': '724', 'Germany': '276',
-  'Netherlands': '528', 'Belgium': '056', 'England': '826',
-  'Great Britain': '826', 'United Kingdom': '826', 'Scotland': '826',
-  'Austria': '040', 'Switzerland': '756', 'Portugal': '620',
-  'Sweden': '752', 'Denmark': '208', 'Norway': '578', 'Finland': '246',
-  'Russia': '643', 'Poland': '616', 'Czech Republic': '203',
-  'Hungary': '348', 'Romania': '642', 'Greece': '300',
-  'Turkey': '792', 'Cyprus': '196',
-  'China': '156', 'Japan': '392', 'Korea': '410',
-  'South Korea': '410', 'North Korea': '408',
-  'India': '356', 'Iran': '364', 'Iraq': '368',
-  'Syria': '760', 'Lebanon': '422', 'Israel': '376',
-  'Palestine': '275', 'Jordan': '400', 'Saudi Arabia': '682',
-  'Afghanistan': '004', 'Pakistan': '586',
-  'Cambodia': '116', 'Thailand': '764', 'Vietnam': '704',
-  'Indonesia': '360', 'Myanmar': '104',
-  'Egypt': '818', 'Nigeria': '566', 'Ethiopia': '231',
-  'Mali': '466', 'Ghana': '288', 'Morocco': '504',
-  'Tunisia': '788', 'Algeria': '012', 'Sudan': '729',
-  'Kenya': '404', 'Tanzania': '834',
-  'United States': '840', 'Mexico': '484', 'Peru': '604',
-  'Colombia': '170', 'Brazil': '076', 'Argentina': '032',
-  'Chile': '152', 'Bolivia': '068', 'Ecuador': '218',
-  'Guatemala': '320',
-  'Australia': '036', 'New Zealand': '554',
+// Nombre país (Met API) → código numérico ISO 3166-1
+// topojson devuelve geo.id como NUMBER, por eso comparamos con parseInt
+const PAIS_A_ISO: Record<string, number> = {
+  'France': 250, 'Italy': 380, 'Spain': 724, 'Germany': 276,
+  'Netherlands': 528, 'Belgium': 56, 'England': 826,
+  'Great Britain': 826, 'United Kingdom': 826, 'Scotland': 826,
+  'Austria': 40, 'Switzerland': 756, 'Portugal': 620,
+  'Sweden': 752, 'Denmark': 208, 'Norway': 578, 'Finland': 246,
+  'Russia': 643, 'Poland': 616, 'Czech Republic': 203,
+  'Hungary': 348, 'Romania': 642, 'Greece': 300,
+  'Turkey': 792, 'Cyprus': 196,
+  'China': 156, 'Japan': 392, 'Korea': 410,
+  'South Korea': 410, 'North Korea': 408,
+  'India': 356, 'Iran': 364, 'Iraq': 368,
+  'Syria': 760, 'Lebanon': 422, 'Israel': 376,
+  'Palestine': 275, 'Jordan': 400, 'Saudi Arabia': 682,
+  'Afghanistan': 4, 'Pakistan': 586,
+  'Cambodia': 116, 'Thailand': 764, 'Vietnam': 704,
+  'Indonesia': 360, 'Myanmar': 104,
+  'Egypt': 818, 'Nigeria': 566, 'Ethiopia': 231,
+  'Mali': 466, 'Ghana': 288, 'Morocco': 504,
+  'Tunisia': 788, 'Algeria': 12, 'Sudan': 729,
+  'Kenya': 404, 'Tanzania': 834,
+  'United States': 840, 'Mexico': 484, 'Peru': 604,
+  'Colombia': 170, 'Brazil': 76, 'Argentina': 32,
+  'Chile': 152, 'Bolivia': 68, 'Ecuador': 218,
+  'Guatemala': 320,
+  'Australia': 36, 'New Zealand': 554,
 };
 
 interface MapaOrigenProps {
@@ -57,13 +59,14 @@ function MapaOrigen({ pais, cultura, tipo }: MapaOrigenProps) {
       <div className={styles.mapaWrapper}>
         <ComposableMap
           projection="geoNaturalEarth1"
-          projectionConfig={{ scale: 145, center: [0, 20] }}
+          projectionConfig={{ scale: 153, center: [0, 15] }}
           style={{ width: '100%', height: '100%' }}
         >
           <Geographies geography={GEO_URL}>
             {({ geographies }) =>
               geographies.map((geo) => {
-                const esOrigen = isoNumerico && geo.id === isoNumerico;
+                // geo.id llega como número desde topojson
+                const esOrigen = isoNumerico !== null && Number(geo.id) === isoNumerico;
                 return (
                   <Geography
                     key={geo.rsmKey}
@@ -76,7 +79,7 @@ function MapaOrigen({ pais, cultura, tipo }: MapaOrigenProps) {
                         outline: 'none',
                       },
                       hover: {
-                        fill: esOrigen ? colorObra : '#333',
+                        fill: esOrigen ? colorObra : '#383838',
                         stroke: '#111',
                         strokeWidth: 0.5,
                         outline: 'none',
@@ -96,7 +99,9 @@ function MapaOrigen({ pais, cultura, tipo }: MapaOrigenProps) {
           <>
             <span className={styles.punto} style={{ background: isoNumerico ? colorObra : '#555' }} />
             <span className={styles.labelPais}>{paisMostrado}</span>
-            {!isoNumerico && <span className={styles.sinDatos}> · no localizable en el mapa</span>}
+            {pais && !isoNumerico && (
+              <span className={styles.sinDatos}> · origen no localizable</span>
+            )}
           </>
         ) : (
           <span className={styles.sinDatos}>Origen geográfico no catalogado</span>

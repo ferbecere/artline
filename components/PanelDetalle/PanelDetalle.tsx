@@ -10,14 +10,7 @@
 // un mapa del mundo con el país de creación resaltado. Por ahora muestra
 // un placeholder. Se puede implementar con Leaflet o Mapbox.
 
-import dynamic from 'next/dynamic';
 import styles from './PanelDetalle.module.css';
-
-// Carga dinámica: react-simple-maps solo funciona en cliente (usa SVG del navegador)
-const MapaOrigen = dynamic(() => import('../MapaOrigen/MapaOrigen'), {
-  ssr: false,
-  loading: () => <div className={styles.minimapaPlaceholder}><div className={styles.minimapaIcono}>🗺️</div></div>,
-});
 import { Carta } from '@/types/juego';
 import Image from 'next/image';
 
@@ -140,13 +133,18 @@ export default function PanelDetalle({ carta, onCerrar, ocultarFecha = false }: 
               el país de creación de la obra resaltado en el mapa mundi.
               La estructura HTML y el espacio ya están preparados.
           */}
+          {/* Minimapa siempre visible — cuando no hay datos de país lo indicamos */}
           <div className={styles.minimapaZona}>
-            <span className={styles.labelCampo}>Origen en el mundo</span>
-            <MapaOrigen
-              pais={carta.pais}
-              cultura={carta.cultura}
-              tipo={carta.tipo}
-            />
+              <span className={styles.labelCampo}>Origen en el mundo</span>
+              <div className={styles.minimapaPlaceholder}>
+                <div className={styles.minimapaIcono}>🗺️</div>
+                <p className={styles.minimapaTexto}>
+                  {carta.pais || carta.cultura
+                    ? `Mapa de origen próximamente · ${carta.pais || carta.cultura}`
+                    : 'Origen geográfico no catalogado para esta obra'}
+                </p>
+              </div>
+              {/* TODO: <MapaOrigen pais={carta.pais} /> */}
           </div>
 
           {/* Enlace al museo: solo cuando la carta ya está en el tablero.

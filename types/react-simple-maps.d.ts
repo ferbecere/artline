@@ -20,6 +20,7 @@ declare module 'react-simple-maps' {
   }
 
   interface GeographyProps {
+    className?: string;
     key?: string;
     geography: Geography;
     style?: {

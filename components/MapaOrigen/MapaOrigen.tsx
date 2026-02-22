@@ -13,8 +13,6 @@ const COLOR_TIPO: Record<TipoObra, string> = {
   otro:      '#9b8ec4',
 };
 
-// Nombre país (Met API) → código numérico ISO 3166-1
-// topojson devuelve geo.id como NUMBER, por eso comparamos con parseInt
 const PAIS_A_ISO: Record<string, number> = {
   'France': 250, 'Italy': 380, 'Spain': 724, 'Germany': 276,
   'Netherlands': 528, 'Belgium': 56, 'England': 826,
@@ -58,19 +56,24 @@ function MapaOrigen({ pais, cultura, tipo }: MapaOrigenProps) {
     <div className={styles.contenedor}>
       <div className={styles.mapaWrapper}>
         <ComposableMap
-          projection="geoNaturalEarth1"
-          projectionConfig={{ scale: 153, center: [0, 15] }}
+          projection="geoMercator"
+          projectionConfig={{
+            // Recortamos: centramos en lat 20 (quita Antártida y reduce ártico)
+            // scale alto = zoom in = se ven mejor los países
+            scale: 105,
+            center: [10, 25],
+          }}
           style={{ width: '100%', height: '100%' }}
         >
           <Geographies geography={GEO_URL}>
             {({ geographies }) =>
               geographies.map((geo) => {
-                // geo.id llega como número desde topojson
                 const esOrigen = isoNumerico !== null && Number(geo.id) === isoNumerico;
                 return (
                   <Geography
                     key={geo.rsmKey}
                     geography={geo}
+                    className={esOrigen ? styles.paisOrigen : ''}
                     style={{
                       default: {
                         fill: esOrigen ? colorObra : '#2a2a2a',
@@ -97,7 +100,10 @@ function MapaOrigen({ pais, cultura, tipo }: MapaOrigenProps) {
       <div className={styles.leyenda}>
         {paisMostrado ? (
           <>
-            <span className={styles.punto} style={{ background: isoNumerico ? colorObra : '#555' }} />
+            <span
+              className={styles.punto}
+              style={{ background: isoNumerico ? colorObra : '#555' }}
+            />
             <span className={styles.labelPais}>{paisMostrado}</span>
             {pais && !isoNumerico && (
               <span className={styles.sinDatos}> · origen no localizable</span>

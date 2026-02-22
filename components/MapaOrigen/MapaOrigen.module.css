@@ -14,21 +14,25 @@
   border: 1px solid var(--gris-700);
 }
 
-/* ---- Animación de latido sobre el país de origen ---- */
-/* Usamos una animación CSS keyframe sobre el fill del SVG */
+/* País normal: sin animación */
+.paisNormal {
+  /* nada — los estilos inline lo controlan */
+}
+
+/* País de origen: pulsa en opacity — funciona aunque fill sea inline */
 @keyframes latido {
-  0%   { fill-opacity: 1; }
-  40%  { fill-opacity: 0.45; }
-  55%  { fill-opacity: 1; }
-  75%  { fill-opacity: 0.6; }
-  100% { fill-opacity: 1; }
+  0%   { opacity: 1; }
+  35%  { opacity: 0.3; }
+  50%  { opacity: 1; }
+  70%  { opacity: 0.55; }
+  100% { opacity: 1; }
 }
 
 .paisOrigen {
   animation: latido 2s ease-in-out infinite;
 }
 
-/* ---- Leyenda ---- */
+/* Leyenda */
 .leyenda {
   display: flex;
   align-items: center;

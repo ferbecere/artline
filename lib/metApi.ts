@@ -12,6 +12,17 @@
 
 import { Carta, TipoObra } from '../types/juego';
 
+// Algunos campos de la Met API llegan con comillas literales: ""Japan""
+// Esta función las elimina para obtener el valor limpio
+function limpiarCampo(valor: unknown): string {
+  if (!valor || typeof valor !== 'string') return '';
+  const v = valor.trim();
+  if (v.startsWith('"') && v.endsWith('"')) return v.slice(1, -1).trim();
+  return v;
+}
+
+
+
 const BASE_URL = 'https://collectionapi.metmuseum.org/public/collection/v1';
 
 // Cache simple en memoria del servidor
@@ -62,8 +73,8 @@ function transformarObra(obra: any): Carta | null {
 
   return {
     id: obra.objectID,
-    titulo: obra.title,
-    artista: obra.artistDisplayName || 'Artista desconocido',
+    titulo: limpiarCampo(obra.title) || 'Sin título',
+    artista: limpiarCampo(obra.artistDisplayName) || 'Artista desconocido',
     anio: anio,
     anioTexto: obra.objectDate || String(anio),
     imagen: obra.primaryImageSmall || obra.primaryImage,
@@ -71,8 +82,8 @@ function transformarObra(obra: any): Carta | null {
     departamento: obra.department || '',
     medio: obra.medium || 'Técnica desconocida',
     dimensiones: obra.dimensions || '',
-    cultura: obra.culture || '',
-    pais: obra.country || '',
+    cultura: limpiarCampo(obra.culture),
+    pais: limpiarCampo(obra.country),
     descripcion: obra.creditLine || '',
     urlObra: obra.objectURL || `https://www.metmuseum.org/art/collection/search/${obra.objectID}`,
   };

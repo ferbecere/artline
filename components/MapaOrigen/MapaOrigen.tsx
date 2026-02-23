@@ -15,7 +15,7 @@ const COLOR_TIPO: Record<TipoObra, string> = {
 
 const PAIS_A_ISO: Record<string, number> = {
   // Europa
-  'France': 250, 'Italy': 380, 'Spain': 724, 'Germany': 276,
+  'France': 250, 'French': 250, 'Italy': 380, 'Spain': 724, 'Germany': 276,
   'Netherlands': 528, 'Netherlandish': 528, 'Belgian': 56, 'Belgium': 56,
   'England': 826, 'British': 826, 'Great Britain': 826,
   'United Kingdom': 826, 'Scotland': 826, 'Welsh': 826, 'Irish': 372,
@@ -60,10 +60,18 @@ interface MapaOrigenProps {
 
 function MapaOrigen({ pais, cultura, tipo }: MapaOrigenProps) {
   const colorObra = COLOR_TIPO[tipo];
-  const isoNumerico = pais ? PAIS_A_ISO[pais] : null;
-  const paisMostrado = pais || cultura || null;
-
-    console.log('MapaOrigen:', { pais: JSON.stringify(pais), cultura: JSON.stringify(cultura), isoNumerico });
+  // Busca coincidencia exacta primero, luego parcial (para "Greek, Attic" → Greece)
+  const valorBusqueda = (pais || cultura || '').replace(/^"+|"+$/g, '').trim();
+  let isoNumerico: number | null = PAIS_A_ISO[valorBusqueda] ?? null;
+  if (!isoNumerico && valorBusqueda) {
+    // Búsqueda parcial: busca si alguna clave del diccionario está contenida en el valor
+    const clave = Object.keys(PAIS_A_ISO).find(k => 
+      valorBusqueda.toLowerCase().includes(k.toLowerCase()) ||
+      k.toLowerCase().includes(valorBusqueda.toLowerCase())
+    );
+    if (clave) isoNumerico = PAIS_A_ISO[clave];
+  }
+  const paisMostrado = valorBusqueda || null;
 
   return (
     <div className={styles.contenedor}>

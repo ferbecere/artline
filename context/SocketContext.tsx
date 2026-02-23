@@ -45,6 +45,7 @@ interface SocketContextValue {
   resetearSala: () => void;
   rendirse: () => void;
   esCreador: boolean;
+  socket: Socket | null;
 }
 
 const SocketContext = createContext<SocketContextValue | null>(null);
@@ -143,6 +144,7 @@ export function SocketProvider({ children }: { children: React.ReactNode }) {
       conectado, miSocketId, salaId, miNombre,
       estadoJuego, ultimoResultado, error,
       crearSala, unirseASala, colocarCarta, limpiarError, resetearSala, rendirse, esCreador,
+      socket: socketRef.current,
     }}>
       {children}
     </SocketContext.Provider>

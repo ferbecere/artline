@@ -105,7 +105,7 @@ export function useSocket(): UseSocketReturn {
     });
 
     socket.on('juegoIniciado', ({ mensaje }) => {
-      ('[Juego] Iniciado:', mensaje);
+      console.log('[Juego] Iniciado:', mensaje);
     });
 
     socket.on('estadoActualizado', (nuevoEstado: EstadoJuegoCliente) => {

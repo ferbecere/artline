@@ -159,6 +159,14 @@ app.prepare().then(() => {
       broadcastEstado(io, salaId);
     });
 
+    // ----------------------------------------------------------
+    // CHAT
+    // ----------------------------------------------------------
+    socket.on('mensajeChat', ({ salaId, autor, texto, hora }: { salaId: string; autor: string; texto: string; hora: string }) => {
+      // Retransmitimos a todos los jugadores de la sala (incluido el emisor)
+      io.to(salaId).emit('mensajeChat', { autor, texto, hora });
+    });
+
     socket.on('disconnect', () => {
       const salaId = socketASala.get(socket.id);
       if (salaId) {

@@ -8,6 +8,7 @@ import InfoJugador from '@/components/InfoJugador/InfoJugador';
 import Tablero from '@/components/Tablero/Tablero';
 import Mano from '@/components/Mano/Mano';
 import PanelDetalle from '@/components/PanelDetalle/PanelDetalle';
+import Chat from '@/components/Chat/Chat';
 import { Carta } from '@/types/juego';
 
 // Umbral para el modal de "distancia grande": yo tengo N más que el rival
@@ -29,6 +30,7 @@ export default function PaginaJuego() {
     resetearSala,
     rendirse,
     esCreador,
+    socket,
   } = useSocket();
 
   // ---- Estado local de UI ----
@@ -291,6 +293,15 @@ export default function PaginaJuego() {
           <span>🖱️ Clic derecho sobre cualquier obra para más información</span>
           <button className={styles.avisoClose} onClick={() => setAvisoCerrado(true)} aria-label="Cerrar aviso">×</button>
         </div>
+      )}
+
+      {/* ---- CHAT FLOTANTE ---- */}
+      {miJugador && (
+        <Chat
+          miNombre={miJugador.nombre}
+          salaId={salaId}
+          socket={socket}
+        />
       )}
 
       {/* ---- PANEL LATERAL: Detalle de obra ---- */}

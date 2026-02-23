@@ -164,7 +164,7 @@ export default function PaginaInicio() {
               <button
                 type="submit"
                 className={`${styles.btn} ${styles.btnPrimario}`}
-                disabled={!nombre.trim() || cargando}
+                disabled={cargando}
               >
                 {cargando ? 'Creando sala...' : 'Crear sala'}
               </button>
@@ -217,7 +217,7 @@ export default function PaginaInicio() {
               <button
                 type="submit"
                 className={`${styles.btn} ${styles.btnPrimario}`}
-                disabled={!nombre.trim() || codigoSala.length < 6 || cargando}
+                disabled={codigoSala.length < 6 || cargando}
               >
                 {cargando ? 'Conectando...' : 'Unirse'}
               </button>

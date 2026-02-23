@@ -137,6 +137,8 @@
   gap: 8px;
   flex-shrink: 0;
   margin-left: auto;
+  position: relative;
+  z-index: 60;
 }
 
 .btnCancelar {

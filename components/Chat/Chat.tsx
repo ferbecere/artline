@@ -15,10 +15,15 @@ interface ChatProps {
   miNombre: string;
   salaId: string;
   socket: any;
+  onChatAbierto?: (abierto: boolean) => void;
 }
 
-export default function Chat({ miNombre, salaId, socket }: ChatProps) {
+export default function Chat({ miNombre, salaId, socket, onChatAbierto }: ChatProps) {
   const [abierto, setAbierto] = useState(false);
+
+  useEffect(() => {
+    onChatAbierto?.(abierto);
+  }, [abierto, onChatAbierto]);
   const [mensajes, setMensajes] = useState<Mensaje[]>([]);
   const [input, setInput] = useState('');
   const [noLeidos, setNoLeidos] = useState(0);

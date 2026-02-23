@@ -13,6 +13,7 @@ interface ManoProps {
   onDeseleccionar: () => void;
   onVerDetalle: (carta: TipoCarta) => void;
   onRendirse: () => void;
+  chatAbierto?: boolean;
   ultimoResultado?: { correcto: boolean; mensaje: string; cartaId: number } | null;
 }
 
@@ -25,6 +26,7 @@ export default function Mano({
   onDeseleccionar,
   onVerDetalle,
   onRendirse,
+  chatAbierto = false,
   ultimoResultado,
 }: ManoProps) {
   function handleClickCarta(carta: TipoCarta) {
@@ -85,9 +87,11 @@ export default function Mano({
               Cancelar
             </button>
           )}
-          <button className={styles.btnRendirse} onClick={onRendirse}>
-            Rendirse
-          </button>
+          {!chatAbierto && (
+            <button className={styles.btnRendirse} onClick={onRendirse}>
+              Rendirse
+            </button>
+          )}
         </div>
       </div>
 

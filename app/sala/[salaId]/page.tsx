@@ -39,6 +39,7 @@ export default function PaginaJuego() {
   const [modalRendirse, setModalRendirse] = useState<'manual' | 'automatico' | null>(null);
   const [copiado, setCopiado] = useState(false);
   const [avisoCerrado, setAvisoCerrado] = useState(false);
+  const [chatAbierto, setChatAbierto] = useState(false);
 
   const copiarCodigo = () => {
     navigator.clipboard.writeText(salaId).then(() => {
@@ -283,6 +284,7 @@ export default function PaginaJuego() {
           onDeseleccionar={handleDeseleccionar}
           onVerDetalle={handleVerDetalleMano}
           onRendirse={() => setModalRendirse('manual')}
+          chatAbierto={chatAbierto}
           ultimoResultado={ultimoResultado}
         />
       )}
@@ -301,6 +303,7 @@ export default function PaginaJuego() {
           miNombre={miJugador.nombre}
           salaId={salaId}
           socket={socket}
+          onChatAbierto={setChatAbierto}
         />
       )}
 

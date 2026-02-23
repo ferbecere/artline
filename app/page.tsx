@@ -153,9 +153,9 @@ export default function PaginaInicio() {
                   value={nombre}
                   onChange={e => setNombre(e.target.value)}
                   placeholder="Ej: Picasso_Fan"
+                  required
                   maxLength={20}
                   autoFocus
-                  required
                 />
               </div>
 
@@ -164,7 +164,7 @@ export default function PaginaInicio() {
               <button
                 type="submit"
                 className={`${styles.btn} ${styles.btnPrimario}`}
-                disabled={cargando}
+                disabled={!nombre.trim() || cargando}
               >
                 {cargando ? 'Creando sala...' : 'Crear sala'}
               </button>
@@ -191,9 +191,9 @@ export default function PaginaInicio() {
                   value={nombre}
                   onChange={e => setNombre(e.target.value)}
                   placeholder="Ej: Vermeer_Fan"
+                  required
                   maxLength={20}
                   autoFocus
-                  required
                 />
               </div>
 
@@ -217,7 +217,7 @@ export default function PaginaInicio() {
               <button
                 type="submit"
                 className={`${styles.btn} ${styles.btnPrimario}`}
-                disabled={codigoSala.length < 6 || cargando}
+                disabled={!nombre.trim() || codigoSala.length < 6 || cargando}
               >
                 {cargando ? 'Conectando...' : 'Unirse'}
               </button>

@@ -63,6 +63,8 @@ function MapaOrigen({ pais, cultura, tipo }: MapaOrigenProps) {
   const isoNumerico = pais ? PAIS_A_ISO[pais] : null;
   const paisMostrado = pais || cultura || null;
 
+    console.log('MapaOrigen:', { pais: JSON.stringify(pais), cultura: JSON.stringify(cultura), isoNumerico });
+
   return (
     <div className={styles.contenedor}>
       <div className={styles.mapaWrapper}>

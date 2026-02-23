@@ -49,7 +49,9 @@ export default function PaginaJuego() {
     soyElGanador: boolean;
     porRendicion?: boolean;
     nombreRendido?: string;
+    porAbandono?: boolean;
   } | null>(null);
+  const [pantallaAbandono, setPantallaAbandono] = useState(false);
 
   // ---- Derivados del estado ----
   const miJugador = estadoJuego?.jugadores.find(j => j.socketId === miSocketId);
@@ -63,11 +65,26 @@ export default function PaginaJuego() {
   // ---- Detectar fin de juego ----
   useEffect(() => {
     if (estadoJuego?.fase === 'terminado' && estadoJuego.ganador) {
-      const ganadorJugador = estadoJuego.jugadores.find(j => j.socketId === estadoJuego.ganador);
-      setJuegoTerminadoInfo({
-        ganador: ganadorJugador?.nombre || 'Desconocido',
-        soyElGanador: estadoJuego.ganador === miSocketId,
-      });
+      const esAbandono = (estadoJuego as any).porAbandono === true;
+
+      if (esAbandono) {
+        // Mostrar pantalla de abandono durante 3 segundos, luego la de victoria
+        setPantallaAbandono(true);
+        setTimeout(() => {
+          setPantallaAbandono(false);
+          setJuegoTerminadoInfo({
+            ganador: 'Tú',
+            soyElGanador: true,
+            porAbandono: true,
+          });
+        }, 3500);
+      } else {
+        const ganadorJugador = estadoJuego.jugadores.find(j => j.socketId === estadoJuego.ganador);
+        setJuegoTerminadoInfo({
+          ganador: ganadorJugador?.nombre || 'Desconocido',
+          soyElGanador: estadoJuego.ganador === miSocketId,
+        });
+      }
     }
   }, [estadoJuego?.fase, estadoJuego?.ganador, miSocketId, estadoJuego?.jugadores]);
 
@@ -173,6 +190,22 @@ export default function PaginaJuego() {
   }
 
   // ---- Pantalla: Fin de juego ----
+  // ---- Pantalla: rival huye ----
+  if (pantallaAbandono) {
+    return (
+      <div className={styles.pantallaAbandono}>
+        <div className={styles.abandonoContenedor}>
+          <div className={styles.abandonoEmoji}>🏃</div>
+          <h2 className={styles.abandonoTitulo}>¡Tu rival ha huido con pavor!</h2>
+          <p className={styles.abandonoSubtitulo}>La obra de arte los ha superado...</p>
+          <div className={styles.abandonoDots}>
+            <span /><span /><span />
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   if (juegoTerminadoInfo) {
     return (
       <div className={styles.pantallaFin}>
@@ -182,9 +215,11 @@ export default function PaginaJuego() {
             {juegoTerminadoInfo.soyElGanador ? '¡Has ganado!' : 'Has perdido'}
           </h2>
           <p className={styles.finSubtitulo}>
-            {juegoTerminadoInfo.soyElGanador
-              ? 'Eres el experto en arte del Metropolitan Museum'
-              : `${juegoTerminadoInfo.ganador} conoce mejor la historia del arte`}
+            {juegoTerminadoInfo.porAbandono
+              ? 'Victoria por abandono — tu rival no pudo con la presión'
+              : juegoTerminadoInfo.soyElGanador
+                ? 'Eres el experto en arte del Metropolitan Museum'
+                : `${juegoTerminadoInfo.ganador} conoce mejor la historia del arte`}
           </p>
           <div className={styles.finTablero}>
             <p className={styles.finTableroLabel}>Línea de tiempo final — {estadoJuego.tablero.length} obras</p>

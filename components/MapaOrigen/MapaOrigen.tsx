@@ -61,10 +61,6 @@ interface MapaOrigenProps {
 function MapaOrigen({ pais, cultura, tipo }: MapaOrigenProps) {
   const colorObra = COLOR_TIPO[tipo];
   const isoNumerico = pais ? PAIS_A_ISO[pais] : null;
-  //log temporal
-   console.log('MapaOrigen props:', { pais, isoNumerico });
-
-
   const paisMostrado = pais || cultura || null;
 
   return (
@@ -81,11 +77,6 @@ function MapaOrigen({ pais, cultura, tipo }: MapaOrigenProps) {
           <Geographies geography={GEO_URL}>
             {({ geographies }) =>
               geographies.map((geo) => {
-              const id = Number(geo.id);
-                // Log temporal — quitar después
-                if (id === 156 || id === 364 || id === 818) {
-                  console.log('País encontrado:', geo.id, geo.properties);
-                 }
                 const esOrigen = isoNumerico !== null && Number(geo.id) === isoNumerico;
                 return (
                   <Geography

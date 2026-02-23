@@ -420,3 +420,72 @@
 .avisoClose:hover {
   color: var(--gris-300);
 }
+
+/* ---- Pantalla abandono ---- */
+.pantallaAbandono {
+  position: fixed;
+  inset: 0;
+  background: var(--gris-950, #0a0a0a);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+  animation: aparecer 0.5s ease;
+}
+
+.abandonoContenedor {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+
+@keyframes huir {
+  0%   { transform: translateX(0) rotate(0deg); }
+  30%  { transform: translateX(30px) rotate(15deg); }
+  60%  { transform: translateX(-10px) rotate(-5deg); }
+  100% { transform: translateX(60px) rotate(20deg) scale(0.8); opacity: 0; }
+}
+
+.abandonoEmoji {
+  font-size: 64px;
+  animation: huir 2s ease-in 0.5s forwards;
+  display: inline-block;
+}
+
+.abandonoTitulo {
+  font-family: var(--fuente-titulo);
+  font-size: 28px;
+  color: var(--blanco);
+  margin: 0;
+}
+
+.abandonoSubtitulo {
+  font-size: 14px;
+  color: var(--gris-500);
+  margin: 0;
+}
+
+/* Tres puntos pulsantes de carga */
+@keyframes pulsar {
+  0%, 100% { opacity: 0.2; transform: scale(0.8); }
+  50%       { opacity: 1;   transform: scale(1.2); }
+}
+
+.abandonoDots {
+  display: flex;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.abandonoDots span {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--gris-500);
+  animation: pulsar 1s ease-in-out infinite;
+}
+
+.abandonoDots span:nth-child(2) { animation-delay: 0.2s; }
+.abandonoDots span:nth-child(3) { animation-delay: 0.4s; }

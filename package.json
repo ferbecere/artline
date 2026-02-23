@@ -12,18 +12,18 @@
     "next": "^16.1.6",
     "react": "^18",
     "react-dom": "^18",
-    "react-simple-maps": "^3.0.0",
     "socket.io": "^4.7.5",
     "socket.io-client": "^4.7.5",
-    "uuid": "^10.0.0"
+    "uuid": "^10.0.0",
+    "react-simple-maps": "^3.0.0"
   },
   "devDependencies": {
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "@types/uuid": "^10.0.0",
-    "tsx": "^4.7.0",
-    "typescript": "^5"
+    "typescript": "^5",
+    "tsx": "^4.7.0"
   },
   "engines": {
     "node": ">=18"

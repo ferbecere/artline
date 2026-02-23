@@ -98,8 +98,9 @@ export function SocketProvider({ children }: { children: React.ReactNode }) {
       setError(mensaje);
     });
 
-    socket.on('jugadorDesconectado', ({ mensaje }: { mensaje: string }) => {
-      setError(mensaje);
+    socket.on('jugadorDesconectado', () => {
+      // Notificamos via estadoJuego con una fase especial para que la página lo gestione
+      setEstadoJuego((prev: any) => prev ? { ...prev, fase: 'terminado', ganador: socketRef.current?.id, porAbandono: true } : prev);
     });
 
     return () => {
